@@ -1,6 +1,6 @@
 # edu-analytics
 
-> A Vue.js project
+> Education Analytics charts
 
 ## Build Setup
 
