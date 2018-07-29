@@ -1,4 +1,4 @@
-export class School {
+export class SchoolInformation {
 
     private _schoolName: String;
     private _schoolAlias: String;

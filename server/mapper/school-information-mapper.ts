@@ -1,9 +1,10 @@
-import { School } from "../models/school-information";
+import {SchoolInformation} from "../models/school-information";
 
-export class SchoolInformation {
+
+export class SchoolInformationMapper {
 
     public static mapData(data: any): SchoolInformation {
-        let schoolInfo = new School();
+        let schoolInfo = new SchoolInformation();
         schoolInfo.schoolName = data.name;
         schoolInfo.schoolAlias = data.schoolAlias;
         schoolInfo.website = data.school_url;
