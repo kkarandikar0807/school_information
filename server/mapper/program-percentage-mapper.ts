@@ -44,6 +44,5 @@ export class ProgramPercentageMapper {
         programPercentageData.mechanic_Repair_Technology = data.mechanic_repair_technology;
 
         return programPercentageData;
-
     }
 }
