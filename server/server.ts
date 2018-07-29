@@ -22,14 +22,21 @@ app.get('/schools', (req: any, res: any) => {
         } else {
             res.json(JSON.parse(body));
         }
-        
+
     })
 })
 
 app.get('/schoolinformation', (req: any, res: any) => {
     schoolId = req.query.schoolId;
     httpRequest.get(`${UrlConstants.baseURL}?id=${schoolId}&api_key=${UrlConstants.api_Key}`, (error: any, response: any, body: any) => {
-        
+
+    });
+});
+
+app.post('/login', (req: any, res: any) => {
+    console.log(req.body);
+    res.json({
+        gotData: true
     });
 });
 
@@ -47,7 +54,7 @@ app.get('/programpercentage', (req: any ,res: any) => {
             let bodyObject = JSON.parse(body);
 
             let mappedData = ProgramPercentageMapper.mapData(bodyObject.results[0]["2015"].academics.program_percentage);
-            
+
             res.json(mappedData);
         }
     });
@@ -65,7 +72,7 @@ app.get('/publicincome', (req: any ,res: any) => {
             res.json(error);
         } else {
             let bodyObject = JSON.parse(body);
-            
+
             res.json(bodyObject.results[0]["2015"].cost.net_price.public.by_income_level);
         }
     });
@@ -82,7 +89,7 @@ app.get('/raceandethnicity', (req: any, res: any) => {
             res.json(error);
         } else {
             let bodyObject = JSON.parse(body);
-            
+
             res.json(bodyObject.results[0]["2015"].student.demographics.race_ethnicity);
         }
     });
