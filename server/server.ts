@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as httpRequest from 'request';
 import { UrlConstants } from './constants/url-constants';
+import { ProgramPercentageMapper } from './mapper/program-percentage-mapper';
 
 const app = express();
 app.use(cors());
@@ -25,6 +26,13 @@ app.get('/schools', (req: any, res: any) => {
     })
 })
 
+app.get('/schoolinformation', (req: any, res: any) => {
+    schoolId = req.query.schoolId;
+    httpRequest.get(`${UrlConstants.baseURL}?id=${schoolId}&api_key=${UrlConstants.api_Key}`, (error: any, response: any, body: any) => {
+        
+    });
+});
+
 
 /**
  * This API call will return the information about the programa offered by the college.
@@ -37,8 +45,10 @@ app.get('/programpercentage', (req: any ,res: any) => {
             res.json(error);
         } else {
             let bodyObject = JSON.parse(body);
+
+            let mappedData = ProgramPercentageMapper.mapData(bodyObject.results[0]["2015"].academics.program_percentage);
             
-            res.json(bodyObject.results[0]["2015"].academics.program_percentage);
+            res.json(mappedData);
         }
     });
 
