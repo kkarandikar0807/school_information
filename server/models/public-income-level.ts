@@ -1,21 +1,78 @@
 export class PublicIncomeLevel {
-    constructor(
-        public zeroTo48000: number,
-        public thirtyThousandAndOneTo75000: number,
-        public thirtyThousandAndOneTo48000: number,
-        public seventyFiveThousandPlus: number,
-        public zeroTo30000: number,
-        public thirtyThousandAndOneTo110000: number,
-        public fortyEightThousandAndOneTo75000: number,
-        public hundredAndTenTousandAndOnePlus: number
-    ) {
-        this.zeroTo48000 = zeroTo48000;
-        this.thirtyThousandAndOneTo75000 = thirtyThousandAndOneTo75000;
-        this.thirtyThousandAndOneTo48000 = thirtyThousandAndOneTo48000;
-        this.seventyFiveThousandPlus = seventyFiveThousandPlus;
-        this.zeroTo30000 = zeroTo30000;
-        this.thirtyThousandAndOneTo110000 = thirtyThousandAndOneTo110000;
-        this.fortyEightThousandAndOneTo75000 = fortyEightThousandAndOneTo75000;
-        this.hundredAndTenTousandAndOnePlus = hundredAndTenTousandAndOnePlus;
+
+    private _zeroTo48000: number;
+    private _thirtyThousandAndOneTo75000: number;
+    private _thirtyThousandAndOneTo48000: number;
+    private _seventyFiveThousandPlus: number;
+    private _zeroTo30000: number;
+    private _seventyFiveThousandAndOneTo110000: number;
+    private _fortyEightThousandAndOneTo75000: number;
+    private _hundredAndTenTousandAndOnePlus: number;
+
+
+    get zeroTo48000(): number {
+        return this._zeroTo48000;
     }
+
+    set zeroTo48000(value: number) {
+        this._zeroTo48000 = value;
+    }
+
+    get thirtyThousandAndOneTo75000(): number {
+        return this._thirtyThousandAndOneTo75000;
+    }
+
+    set thirtyThousandAndOneTo75000(value: number) {
+        this._thirtyThousandAndOneTo75000 = value;
+    }
+
+    get thirtyThousandAndOneTo48000(): number {
+        return this._thirtyThousandAndOneTo48000;
+    }
+
+    set thirtyThousandAndOneTo48000(value: number) {
+        this._thirtyThousandAndOneTo48000 = value;
+    }
+
+    get seventyFiveThousandPlus(): number {
+        return this._seventyFiveThousandPlus;
+    }
+
+    set seventyFiveThousandPlus(value: number) {
+        this._seventyFiveThousandPlus = value;
+    }
+
+    get zeroTo30000(): number {
+        return this._zeroTo30000;
+    }
+
+    set zeroTo30000(value: number) {
+        this._zeroTo30000 = value;
+    }
+
+    get seventyFiveThousandAndOneTo110000(): number {
+        return this._seventyFiveThousandAndOneTo110000;
+    }
+
+    set seventyFiveThousandAndOneTo110000(value: number) {
+        this._seventyFiveThousandAndOneTo110000 = value;
+    }
+
+    get fortyEightThousandAndOneTo75000(): number {
+        return this._fortyEightThousandAndOneTo75000;
+    }
+
+    set fortyEightThousandAndOneTo75000(value: number) {
+        this._fortyEightThousandAndOneTo75000 = value;
+    }
+
+    get hundredAndTenTousandAndOnePlus(): number {
+        return this._hundredAndTenTousandAndOnePlus;
+    }
+
+    set hundredAndTenTousandAndOnePlus(value: number) {
+        this._hundredAndTenTousandAndOnePlus = value;
+    }
+
+    constructor() {}
 }

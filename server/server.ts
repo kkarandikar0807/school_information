@@ -11,8 +11,8 @@ app.use(bodyParser.json());
 
 let schoolId: String = '';
 /**
- * This API call will return the school information.
- * This includes the school name, website, city etc.
+ * This API call will return all the schools with thier ID's.
+ *
  */
 app.get('/schools', (req: any, res: any) => {
 
