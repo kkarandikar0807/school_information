@@ -24,7 +24,11 @@ export default {
     },
     methods: {
         login() {
-
+            this.$http.post('http://localhost:4000/login', this.user).then(response => {
+                console.log(response);
+            }, error => {
+                console.log(error);
+            })
         }
     }
 }
