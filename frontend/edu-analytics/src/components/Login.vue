@@ -9,7 +9,7 @@
             <input class="form-control" type="text" v-model = user.password>
         </div>
         <button class="btn btn-primary" @click="login"> Submit </button>
-    </div>    
+    </div>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         login() {
-            
+
         }
     }
 }
