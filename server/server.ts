@@ -4,6 +4,13 @@ import * as bodyParser from 'body-parser';
 import * as httpRequest from 'request';
 import { UrlConstants } from './constants/url-constants';
 import { ProgramPercentageMapper } from './mapper/program-percentage-mapper';
+import { SchoolMapper } from './mapper/school-mapper';
+import { School } from './models/school';
+import { SchoolInformation } from './models/school-information';
+import { SchoolInformationMapper } from './mapper/school-information-mapper';
+import { RaceAndEthnicityMapper } from './mapper/race-and-ethnicity-mapper';
+import { PublicIncomeLevel } from './models/public-income-level';
+import { PublicIncomeLevelMapper } from './mapper/public-income-level-mapper';
 
 const app = express();
 app.use(cors());
@@ -20,7 +27,10 @@ app.get('/schools', (req: any, res: any) => {
         if (error) {
             res.json(error);
         } else {
-            res.json(JSON.parse(body));
+            let dataJson = JSON.parse(body);
+            let mappedData: School[] = SchoolMapper.mapData(dataJson);
+            
+            res.json(mappedData);
         }
 
     })
@@ -28,8 +38,16 @@ app.get('/schools', (req: any, res: any) => {
 
 app.get('/schoolinformation', (req: any, res: any) => {
     schoolId = req.query.schoolId;
+    
     httpRequest.get(`${UrlConstants.baseURL}?id=${schoolId}&api_key=${UrlConstants.api_Key}`, (error: any, response: any, body: any) => {
-
+        if (error) {
+            console.log(error);
+        } else {
+            let dataJson = JSON.parse(body);
+            let mappedData: SchoolInformation = SchoolInformationMapper.mapData(dataJson.results[0].school);
+            
+            res.json(mappedData);
+        }
     });
 });
 
@@ -72,8 +90,10 @@ app.get('/publicincome', (req: any ,res: any) => {
             res.json(error);
         } else {
             let bodyObject = JSON.parse(body);
-
-            res.json(bodyObject.results[0]["2015"].cost.net_price.public.by_income_level);
+            
+            let mappedData: PublicIncomeLevel = PublicIncomeLevelMapper.mapData(bodyObject.results[0]["2015"].cost.net_price.public.by_income_level);
+            console.log(mappedData);
+            res.json(mappedData);
         }
     });
 });
@@ -89,8 +109,8 @@ app.get('/raceandethnicity', (req: any, res: any) => {
             res.json(error);
         } else {
             let bodyObject = JSON.parse(body);
-
-            res.json(bodyObject.results[0]["2015"].student.demographics.race_ethnicity);
+            let mappedData = RaceAndEthnicityMapper.mapData(bodyObject.results[0]["2015"].student.demographics.race_ethnicity);
+            res.json(mappedData);
         }
     });
 });

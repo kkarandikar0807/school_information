@@ -1,9 +1,13 @@
 import {School} from "../models/school";
 
 export class SchoolMapper {
-    public mapData(data: any) {
-        let school = new School();
-        school.schoolName = data["school.name"];
-        school.id = data.id;
+    public static mapData(data: any): School[] {
+        
+        let mappedData: School[] = [];
+        for (let i=0; i<data.results.length; i++) {
+            mappedData.push(new School(data.results[i]["school.name"], data.results[i].id))
+        }
+        
+        return mappedData;
     }
 }
