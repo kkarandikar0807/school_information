@@ -5,7 +5,8 @@ export class SchoolInformation {
     website,
     city,
     state,
-    zipCode
+    zipCode,
+    size
   ) {
     this.schoolName = schoolName
     this.schoolAlias = schoolAlias
@@ -13,5 +14,6 @@ export class SchoolInformation {
     this.city = city
     this.state = state
     this.zipCode = zipCode
+    this.size = size
   }
 }
