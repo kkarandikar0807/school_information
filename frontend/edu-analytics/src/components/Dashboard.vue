@@ -42,7 +42,10 @@
         </main>
       </div>
     </div> -->
-    <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
+    <div class="container">
+    <div class="row">
+        <div class="col">
+            <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
             :suggestions="filteredOptions"
             @focus="focusMe"
             @click="clickHandler"
@@ -50,164 +53,280 @@
             :render-suggestion="renderSuggestion"
             :get-suggestion-value="getSuggestionValue"
             :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/>
-            
-    <div style="position: absolute; top:100px;">
-        <!-- <chartjs-doughnut :datalabel="'TestDataLabel'" :labels="['happy','myhappy','hello']" :data="[100,40,60]"></chartjs-doughnut> -->
-        <public-income-chart ref="test" :chart-data="publicIncomeValues" :chart-labels="publicIncomeKeys" v-if="loaded"></public-income-chart>
+        </div>
     </div>
+    
+   <div class="row">
+       <div class="col-md-6">
+           <public-income-chart ref="publicincome" :chart-data="publicIncomeValues" :chart-labels="publicIncomeKeys" v-if="publicIncomeDataLoaded"></public-income-chart>
+       </div>
+       <div class="col-md-6">
+           <program-percentages-chart ref="programpercentage" :chart-data="programPercentageValues" :chart-labels="programPercentageKeys" v-if="programPercentageDataLoaded"></program-percentages-chart>
+       </div>
+   </div>    
+   <div class="row">
+       <div class="col-md-6">
+           <race-eth ref="raceandethnicity" :chart-data="raceAndEthnicityValues" :chart-labels="raceAndEthnicityKeys" v-if="raceAndEthnicityDataLoaded"></race-eth>
+       </div>
+       <div class="col-md-6">
+           <div class="card"  v-if="schoolInfoDataLoaded">
+  <div class="card-header">
+    School Information
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">School Name: - {{schoolInformation.schoolName|| 'Info not available'}}</li>
+    <li class="list-group-item">School Alias: - {{schoolInformation.schoolAlias|| 'Info not available' }} </li>
+    <li class="list-group-item">School Website: - {{schoolInformation.website || 'Info not available'}}</li>
+    <li class="list-group-item">School City: - {{schoolInformation.city|| 'Info not available'}}</li>
+    <li class="list-group-item">School State: - {{schoolInformation.state|| 'Info not available'}}</li>
+    <li class="list-group-item">School Zip Code: - {{schoolInformation.zipCode|| 'Info not available'}}</li>
+    <li class="list-group-item">School Size: - {{schoolInformation.size|| 'Info not available'}}</li>
+  </ul>
+</div>
+       </div>
+   </div>    
+   </div>     
     </div>
 </template>
 <script>
 
-import Navbar from './Navbar.vue'
-import { VueAutosuggest } from 'vue-autosuggest';
-import { School } from '../models/school.js';
-import { SchoolInformation } from '../models/school-information.js';
-import { ProgramPercentage } from '../models/program-percentage.js';
-import { RaceAndEthnicity } from '../models/race-and-ethnicity';
-import { PublicIncomeLevel } from '../models/public-income-level';
-import PublicIncomeChart from './PublicIncomeChart.vue'
-import Vue from 'vue'
-import VueCharts from 'vue-chartjs'
-import { setTimeout } from 'timers';
+import Navbar from "./Navbar.vue";
+import { VueAutosuggest } from "vue-autosuggest";
+import { School } from "../models/school.js";
+import { SchoolInformation } from "../models/school-information.js";
+import { ProgramPercentage } from "../models/program-percentage.js";
+import { RaceAndEthnicity } from "../models/race-and-ethnicity";
+import { PublicIncomeLevel } from "../models/public-income-level";
+import PublicIncomeChart from "./PublicIncomeChart.vue";
+import ProgramPercentagesChart from "./ProgramPercentagesChart.vue";
+import RaceAndEthnicityChart from './RaceAndEthnicityChart.vue';
+import Vue from "vue";
+import VueCharts from "vue-chartjs";
+import { setTimeout } from "timers";
 Vue.use(VueCharts);
 export default {
   extends: VueCharts.Doughnut,
   components: {
     navbar: Navbar,
     vueAutosuggest: VueAutosuggest,
-    publicIncomeChart: PublicIncomeChart
-    },
-  data: function() {
-      return {
-          allSchools: [],
-          selectedSchool: null,
-          schoolInformation: null,
-          programPercentage: null,
-          publicIncome: null,
-          raceAndEthnicity: null,
-          filteredOptions: [],
-          publicIncomeKeys: [],
-          publicIncomeValues: [],
-          loaded: false,
-          selected: ""
-
-      }
+    publicIncomeChart: PublicIncomeChart,
+    programPercentagesChart: ProgramPercentagesChart,
+    raceEth: RaceAndEthnicityChart
   },
-  
+  data: function() {
+    return {
+      allSchools: [],
+      selectedSchool: null,
+      schoolInformation: null,
+      programPercentage: null,
+      publicIncome: null,
+      raceAndEthnicity: null,
+      filteredOptions: [],
+      publicIncomeKeys: [],
+      publicIncomeValues: [],
+      programPercentageKeys: [],
+      programPercentageValues: [],
+      raceAndEthnicityKeys: [],
+      raceAndEthnicityValues: [],
+      publicIncomeDataLoaded: false,
+      programPercentageDataLoaded: false,
+      raceAndEthnicityDataLoaded: false,
+      schoolInfoDataLoaded: false,
+      selected: ""
+    };
+  },
+
   beforeMount() {
-          this.$http.get('http://localhost:4000/schools').then(response => {
-              return response.json()
-              }).then(data => {
-                  for (let i =0; i< data.length; i++) {
-                      this.allSchools.push(new School(data[i].schoolName, data[i].id));
-                  }
-              });
-      },
+    this.$http
+      .get("http://localhost:4000/schools")
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        for (let i = 0; i < data.length; i++) {
+          this.allSchools.push(new School(data[i].schoolName, data[i].id));
+        }
+      });
+  },
   methods: {
-      getSchoolInformation() {
-         
-          this.$http.get('http://localhost:4000/schoolinformation', {params: {schoolId: this.selectedSchool}
-              
-          }).then(response => {
-              return response.json()
-          }).then(data => {
-              this.schoolInformation = new SchoolInformation(data._schoolName, data._schoolAlias, data._website, data._city, data._state, data._zipCode, data._size);
-              console.log(this.schoolInformation);
-              
-          })
-      },
+    getSchoolInformation() {
+        this.schoolInfoDataLoaded = false;
+      this.$http
+        .get("http://localhost:4000/schoolinformation", {
+          params: { schoolId: this.selectedSchool }
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.schoolInformation = new SchoolInformation(
+            data._schoolName,
+            data._schoolAlias,
+            data._website,
+            data._city,
+            data._state,
+            data._zipCode,
+            data._size
+          );
+          this.schoolInfoDataLoaded = true;
+        });
+    },
 
-      getProgrampercentage() {
-          this.$http.get('http://localhost:4000/programpercentage', {params: {schoolId: this.selectedSchool}
-          }).then(response => {
-              return response.json()
-          }).then(data => {
-            
-              this.programPercentage = new ProgramPercentage(data._education, data._mathematics, data._business_Marketing,
-                                                             data._communications_Technology, data._language, data._visual_Performing, data._engineering_Technology, 
-                                                             data._parks_Recreation_Fitness, data._agriculture, data._security_Law_Enforcement, data._computer, 
-                                                             data._precision_Production, data._humanities, data._library, data._psychology, data._social_Science, 
-                                                             data._legal, data._english, data._construction, data._military, data._communication, data._public_Administration_Social_Service, 
-                                                             data._architecture, data._ethnic_Cultural_Gender, data._resources, data._health, data._engineering, data._history, 
-                                                             data._theology_Religious_Vocation, data._transportation, data._physical_Science, data._science_Technology, data._biological, 
-                                                             data._family_Consumer_Science, data._philosophy_Religious, data._personal_Culinary);
-                                                             console.log(this.programPercentage);
-            
-          })
-          
-      },
-
-      getPublicIncome() {
-          this.loaded = false;
-          this.$http.get('http://localhost:4000/publicincome', {params: {schoolId: this.selectedSchool}
-          }).then(response => {
-              return response.json()
-          }).then(data => {
-               this.publicIncomeKeys = [];
-            this.publicIncomeValues = [];
-              this.publicIncome = new PublicIncomeLevel(data._zeroTo48000, data._thirtyThousandAndOneTo75000, data._thirtyThousandAndOneTo48000,
-                                                        data._seventyFiveThousandPlus, data._zeroTo30000, data._seventyFiveThousandAndOneTo110000, data._fortyEightThousandAndOneTo75000,
-                                                        data._hundredAndTenThousandAndOnePlus);
-                                                        console.log(this.publicIncome);
-              
-              
-            //   for (let key in this.publicIncome) {
-                  
-            //       this.publicIncomeValues.push(this.publicIncome[key]);
-            //   }
-            //   console.log(this.publicIncomeValues);
+    getProgrampercentage() {
+        this.programPercentageValues = [];
+         this.programPercentageDataLoaded = false;
+      this.$http
+        .get("http://localhost:4000/programpercentage", {
+          params: { schoolId: this.selectedSchool }
+        })
+        .then(response => {
            
-           this.publicIncomeKeys = Object.keys(data);
-            console.log(this.publicIncomeKeys);
-            for(let key in data) {
-                this.publicIncomeValues.push(data[key]);
-            }
+          return response.json();
+        })
+        .then(data => {
+          this.programPercentage = new ProgramPercentage(
+            data._education,
+            data._mathematics,
+            data._business_Marketing,
+            data._communications_Technology,
+            data._language,
+            data._visual_Performing,
+            data._engineering_Technology,
+            data._parks_Recreation_Fitness,
+            data._agriculture,
+            data._security_Law_Enforcement,
+            data._computer,
+            data._precision_Production,
+            data._humanities,
+            data._library,
+            data._psychology,
+            data._social_Science,
+            data._legal,
+            data._english,
+            data._construction,
+            data._military,
+            data._communication,
+            data._public_Administration_Social_Service,
+            data._architecture,
+            data._ethnic_Cultural_Gender,
+            data._resources,
+            data._health,
+            data._engineering,
+            data._history,
+            data._theology_Religious_Vocation,
+            data._transportation,
+            data._physical_Science,
+            data._science_Technology,
+            data._biological,
+            data._family_Consumer_Science,
+            data._philosophy_Religious,
+            data._personal_Culinary
+          );
+          for (let key in this.programPercentage) {
+            this.programPercentageValues.push(this.programPercentage[key]*100);
+          }
+          this.programPercentageKeys = Object.keys(this.programPercentage);
+          this.updateProgramPercentageData(this.programPercentage);
+          this.programPercentageDataLoaded = true;
+          
+        });
+    },
+
+    updateProgramPercentageData(newData) {
+        this.programPercentage = newData;
+        setTimeout(() => {
+            this.$refs.programpercentage.updateProgramPercentageData();
+        });
+    },
+
+    getPublicIncome() {
+      this.publicIncomeValues = [];
+      this.publicIncomeDataLoaded = false;
+      this.$http
+        .get("http://localhost:4000/publicincome", {
+          params: { schoolId: this.selectedSchool }
+        })
+        .then(response => {
             
-            for (let i =0; i < this.publicIncomeValues.length; i++) {
-                if (this.publicIncomeValues[i] === null) {
-                    this.publicIncomeValues[i] = 0;
-                }
-                
-            }
-            console.log(this.publicIncomeValues);
-              this.updateDataExample(this.publicIncomeValues);
-              this.loaded = true;
-          })
+          return response.json();
+        })
+        .then(data => {
+              
+          this.publicIncome = new PublicIncomeLevel(
+            data._zeroTo48000,
+            data._thirtyThousandAndOneTo75000,
+            data._thirtyThousandAndOneTo48000,
+            data._seventyFiveThousandPlus,
+            data._zeroTo30000,
+            data._seventyFiveThousandAndOneTo110000,
+            data._fortyEightThousandAndOneTo75000,
+            data._hundredAndTenThousandAndOnePlus
+          );
+          for (let key in this.publicIncome) {
+            this.publicIncomeValues.push(this.publicIncome[key]);
+          }
+          this.publicIncomeKeys = Object.keys(this.publicIncome);
+          this.updatePublicIncomeData(this.publicIncomeValues);
+          this.publicIncomeDataLoaded = true;
+        });
+    },
+    updatePublicIncomeData(newData) {
+      this.publicIncomeValues = newData;
+      setTimeout(() => {
+        this.$refs.publicincome.updatePublicIncomeData();
+      });
+    },
 
-      },
-      updateDataExample(newData) {
-    this.publicIncomeValues = newData;
-    
-    setTimeout(() => {
-        console.log(this.$refs);
-        this.$refs.test.updateDataExample();
-    });
-	
-},
-
-      getRaceAndEthnicity() {
-          this.$http.get('http://localhost:4000/raceandethnicity', {params: {schoolId: this.selectedSchool}
-          }).then(response => {
-              return response.json()
-          }).then(data => {
-    
-              this.raceAndEthnicity = new RaceAndEthnicity(
-                  data._nhpi, data._non_Resident_Alien, data._black_2000, data._aian_2000, data._hispanic_Prior_2009, data._black, 
-                  data._asian, data._api_2000, data._hispanic_2000, data._unknown_2000, data._unknown, data._white_Non_Hispanic, data._black_Non_Hispanic, 
-                  data._asian_Pacific_Islander, data._white, data._two_Or_More, data._hispanic, data._aian, data._aian_Prior_2009);
-                  console.log(this.raceAndEthnicity);
-          })
-
-      },
-      clickHandler(value) {
-
-      },
-       onInputChange(text, oldText) {
-          
-   //   Full customizability over filtering
+    getRaceAndEthnicity() {
+        this.raceAndEthnicityValues = [];
+      this.raceAndEthnicityDataLoaded = false;
+      this.$http
+        .get("http://localhost:4000/raceandethnicity", {
+          params: { schoolId: this.selectedSchool }
+        })
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.raceAndEthnicity = new RaceAndEthnicity(
+            data._nhpi,
+            data._non_Resident_Alien,
+            data._black_2000,
+            data._aian_2000,
+            data._hispanic_Prior_2009,
+            data._black,
+            data._asian,
+            data._api_2000,
+            data._hispanic_2000,
+            data._unknown_2000,
+            data._unknown,
+            data._white_Non_Hispanic,
+            data._black_Non_Hispanic,
+            data._asian_Pacific_Islander,
+            data._white,
+            data._two_Or_More,
+            data._hispanic,
+            data._aian,
+            data._aian_Prior_2009
+          );
+           for (let key in this.raceAndEthnicity) {
+            this.raceAndEthnicityValues.push(this.raceAndEthnicity[key]*100);
+          }
+          this.raceAndEthnicityKeys = Object.keys(this.raceAndEthnicity);
+          this.updateRaceAndEthnicityData(this.raceAndEthnicityValues);
+          this.raceAndEthnicityDataLoaded = true;
+        });
+    },
+     updateRaceAndEthnicityData(newData) {
+      this.raceAndEthnicityValues = newData;
+      setTimeout(() => {
+        this.$refs.raceandethnicity.updateRaceAndEthnicityData();
+      });
+    },
+    clickHandler(value) {},
+    onInputChange(text, oldText) {
+      //   Full customizability over filtering
       const filteredData = this.allSchools.filter(option => {
-          
         return option.schoolName.toLowerCase().indexOf(text.toLowerCase()) > -1;
       });
 
@@ -215,13 +334,11 @@ export default {
       this.filteredOptions = [{ data: filteredData }];
     },
     onSelected(value) {
-    
       this.selectedSchool = value.item.id;
-      this.getSchoolInformation(); 
-      this.getRaceAndEthnicity(); 
-      this.getPublicIncome(); 
+      this.getSchoolInformation();
+      this.getRaceAndEthnicity();
+      this.getPublicIncome();
       this.getProgrampercentage();
-      
     },
     renderSuggestion(suggestion) {
       /* You will need babel-plugin-transform-vue-jsx for this kind of full customizable
@@ -229,7 +346,7 @@ export default {
        * function to just `return suggestion['propertyName'];`
        */
       const character = suggestion.item;
-      
+
       return (
         <div
           style={{
@@ -247,11 +364,11 @@ export default {
     getSuggestionValue(suggestion) {
       return suggestion.item.schoolName;
     },
-    focusMe(e) {
-      
-    }
+    focusMe(e) {}
   }
-}
+};
+
+
 </script>
 <style scoped>
 </style>

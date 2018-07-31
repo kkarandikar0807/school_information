@@ -4,7 +4,7 @@ import { Bar, Doughnut, mixins } from 'vue-chartjs'
 const { reactiveProp } = mixins
 
 export default {
-  extends: Bar,
+  extends: Doughnut,
   props: {
       chartData: {
         type: Array | Object,
@@ -30,35 +30,33 @@ export default {
         labels: this.chartLabels,
         datasets: [
           {
-            label: 'Public Income',
+            label: 'Race And Ethnicity',
             borderColor: '#249EBF',
             pointBackgroundColor: 'white',
             borderWidth: 1,
             pointBorderColor: '#249EBF',
-            backgroundColor: 'red',
+            backgroundColor: 'orange',
             data: this.chartData
           }
         ]
       }, this.options)
     },
   methods: {
-	updatePublicIncomeData() {
-    // this.renderChart({
-    //     labels: this.chartLabels,
-    //     datasets: [
-    //       {
-    //         label: 'Public Income',
-    //         borderColor: '#249EBF',
-    //         pointBackgroundColor: 'white',
-    //         borderWidth: 1,
-    //         pointBorderColor: '#249EBF',
-    //         backgroundColor: 'red',
-    //         data: this.chartData
-    //       }
-    //     ]
-    //   }, this.options)
-    console.log('called');
-    console.log(this.$data._chart);
+	updateRaceAndEthnicityData() {
+        this.renderChart({
+        labels: this.chartLabels,
+        datasets: [
+          {
+            label: 'Race And Ethnicity',
+            borderColor: '#249EBF',
+            pointBackgroundColor: 'white',
+            borderWidth: 1,
+            pointBorderColor: '#249EBF',
+            backgroundColor: 'orange',
+            data: this.chartData
+          }
+        ]
+      }, this.options)
 		this.$data._chart.update();
 	}
 }

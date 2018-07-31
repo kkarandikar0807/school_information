@@ -1,4 +1,5 @@
 <template>
+<div class="container">
     <div class="col-xs-12 col-sm-8 com-sm-offset-2 col-md-6 col-md-offset-3">
         <div class="form-group">
             <label for="">Username</label>
@@ -10,6 +11,8 @@
         </div>
         <button class="btn btn-primary" @click="login"> Submit </button>
     </div>
+</div>
+    
 </template>
 
 <script>
