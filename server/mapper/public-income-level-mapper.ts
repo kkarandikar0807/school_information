@@ -11,7 +11,7 @@ export class PublicIncomeLevelMapper {
         publicIncome.zeroTo30000 = data["0-30000"];
         publicIncome.seventyFiveThousandAndOneTo110000 = data["75001-110000"];
         publicIncome.fortyEightThousandAndOneTo75000 = data["48001-75000"];
-        publicIncome.hundredAndTenTousandAndOnePlus = data["110001-plus"];
+        publicIncome.hundredAndTenThousandAndOnePlus = data["110001-plus"];
 
         return publicIncome;
     }

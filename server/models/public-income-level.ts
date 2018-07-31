@@ -7,7 +7,7 @@ export class PublicIncomeLevel {
     private _zeroTo30000: number;
     private _seventyFiveThousandAndOneTo110000: number;
     private _fortyEightThousandAndOneTo75000: number;
-    private _hundredAndTenTousandAndOnePlus: number;
+    private _hundredAndTenThousandAndOnePlus: number;
 
 
     get zeroTo48000(): number {
@@ -66,12 +66,12 @@ export class PublicIncomeLevel {
         this._fortyEightThousandAndOneTo75000 = value;
     }
 
-    get hundredAndTenTousandAndOnePlus(): number {
-        return this._hundredAndTenTousandAndOnePlus;
+    get hundredAndTenThousandAndOnePlus(): number {
+        return this._hundredAndTenThousandAndOnePlus;
     }
 
-    set hundredAndTenTousandAndOnePlus(value: number) {
-        this._hundredAndTenTousandAndOnePlus = value;
+    set hundredAndTenThousandAndOnePlus(value: number) {
+        this._hundredAndTenThousandAndOnePlus = value;
     }
 
     constructor() {}

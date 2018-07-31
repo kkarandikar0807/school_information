@@ -44,7 +44,7 @@ app.get('/schoolinformation', (req: any, res: any) => {
             console.log(error);
         } else {
             let dataJson = JSON.parse(body);
-            let mappedData: SchoolInformation = SchoolInformationMapper.mapData(dataJson.results[0].school);
+            let mappedData: SchoolInformation = SchoolInformationMapper.mapData(dataJson.results[0].school, dataJson.results[0]["2015"].student.size);
             
             res.json(mappedData);
         }
@@ -116,6 +116,6 @@ app.get('/raceandethnicity', (req: any, res: any) => {
 });
 
 
-app.listen(4000, () => {
+app.listen(process.env.PORT ||4000, () => {
     console.log("Running on port 4000");
 })

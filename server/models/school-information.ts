@@ -3,6 +3,7 @@ export class SchoolInformation {
     private _schoolName: String;
     private _schoolAlias: String;
     private _website: String;
+    private _size: String;
 
     get schoolName(): String {
         return this._schoolName;
@@ -50,6 +51,14 @@ export class SchoolInformation {
 
     set zipCode(value: String) {
         this._zipCode = value;
+    }
+
+    set size(value: String) {
+        this._size = value
+    }
+
+    get size(): String {
+        return this._size;
     }
 
     private _city: String;
