@@ -1,16 +1,16 @@
 <template>
-<div class="container">
-    <div class="col-xs-12 col-sm-8 com-sm-offset-2 col-md-6 col-md-offset-3">
+<div class="container-fluid center_div">
+   
         <div class="form-group">
             <label for="">Username</label>
-            <input class="form-control" type="text" v-model = user.username>
+            <input class="form-control" type="text" v-model = user.username required autofocus>
         </div>
         <div class="form-group">
             <label for="">Password</label>
-            <input class="form-control" type="text" v-model = user.password>
+            <input class="form-control" type="password" v-model = user.password required>
         </div>
-        <button class="btn btn-primary" @click="login"> Submit </button>
-    </div>
+        <button class="btn btn-primary" @click="login" type="submit"  :disabled="!(user.username!=='' && user.password!=='')"> Login </button>
+    
 </div>
     
 </template>
@@ -38,7 +38,19 @@ export default {
 </script>
 
 <style scoped>
-
+.center_div{
+    width: 50%;
+    height: 50%;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+     margin-left:-25%;/* half width*/
+    margin-top:-12.5%;
+  
+    /* margin: 0 auto; */
+    /* value of your choice which suits your alignment */
+}
 </style>
 
 
