@@ -52,11 +52,13 @@
             :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/>
             
     <div style="position: absolute; top:100px;">
-        sfsd
+        <!-- <chartjs-doughnut :datalabel="'TestDataLabel'" :labels="['happy','myhappy','hello']" :data="[100,40,60]"></chartjs-doughnut> -->
+        <public-income-chart ref="test" :chart-data="publicIncomeValues" :chart-labels="publicIncomeKeys" v-if="loaded"></public-income-chart>
     </div>
     </div>
 </template>
 <script>
+
 import Navbar from './Navbar.vue'
 import { VueAutosuggest } from 'vue-autosuggest';
 import { School } from '../models/school.js';
@@ -64,10 +66,17 @@ import { SchoolInformation } from '../models/school-information.js';
 import { ProgramPercentage } from '../models/program-percentage.js';
 import { RaceAndEthnicity } from '../models/race-and-ethnicity';
 import { PublicIncomeLevel } from '../models/public-income-level';
+import PublicIncomeChart from './PublicIncomeChart.vue'
+import Vue from 'vue'
+import VueCharts from 'vue-chartjs'
+import { setTimeout } from 'timers';
+Vue.use(VueCharts);
 export default {
+  extends: VueCharts.Doughnut,
   components: {
     navbar: Navbar,
-    vueAutosuggest: VueAutosuggest
+    vueAutosuggest: VueAutosuggest,
+    publicIncomeChart: PublicIncomeChart
     },
   data: function() {
       return {
@@ -78,10 +87,14 @@ export default {
           publicIncome: null,
           raceAndEthnicity: null,
           filteredOptions: [],
+          publicIncomeKeys: [],
+          publicIncomeValues: [],
+          loaded: false,
           selected: ""
 
       }
   },
+  
   beforeMount() {
           this.$http.get('http://localhost:4000/schools').then(response => {
               return response.json()
@@ -126,18 +139,52 @@ export default {
       },
 
       getPublicIncome() {
+          this.loaded = false;
           this.$http.get('http://localhost:4000/publicincome', {params: {schoolId: this.selectedSchool}
           }).then(response => {
               return response.json()
           }).then(data => {
+               this.publicIncomeKeys = [];
+            this.publicIncomeValues = [];
               this.publicIncome = new PublicIncomeLevel(data._zeroTo48000, data._thirtyThousandAndOneTo75000, data._thirtyThousandAndOneTo48000,
                                                         data._seventyFiveThousandPlus, data._zeroTo30000, data._seventyFiveThousandAndOneTo110000, data._fortyEightThousandAndOneTo75000,
                                                         data._hundredAndTenThousandAndOnePlus);
                                                         console.log(this.publicIncome);
               
+              
+            //   for (let key in this.publicIncome) {
+                  
+            //       this.publicIncomeValues.push(this.publicIncome[key]);
+            //   }
+            //   console.log(this.publicIncomeValues);
+           
+           this.publicIncomeKeys = Object.keys(data);
+            console.log(this.publicIncomeKeys);
+            for(let key in data) {
+                this.publicIncomeValues.push(data[key]);
+            }
+            
+            for (let i =0; i < this.publicIncomeValues.length; i++) {
+                if (this.publicIncomeValues[i] === null) {
+                    this.publicIncomeValues[i] = 0;
+                }
+                
+            }
+            console.log(this.publicIncomeValues);
+              this.updateDataExample(this.publicIncomeValues);
+              this.loaded = true;
           })
 
       },
+      updateDataExample(newData) {
+    this.publicIncomeValues = newData;
+    
+    setTimeout(() => {
+        console.log(this.$refs);
+        this.$refs.test.updateDataExample();
+    });
+	
+},
 
       getRaceAndEthnicity() {
           this.$http.get('http://localhost:4000/raceandethnicity', {params: {schoolId: this.selectedSchool}

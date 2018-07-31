@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@types/vue-resource": "^0.9.34",
+    "chart.js": "^2.7.2",
     "vue": "^2.5.2",
     "vue-autosuggest": "^1.4.3",
+    "vue-chartjs": "^3.3.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },
