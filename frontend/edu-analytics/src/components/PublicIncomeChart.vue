@@ -43,22 +43,6 @@ export default {
     },
   methods: {
 	updatePublicIncomeData() {
-    // this.renderChart({
-    //     labels: this.chartLabels,
-    //     datasets: [
-    //       {
-    //         label: 'Public Income',
-    //         borderColor: '#249EBF',
-    //         pointBackgroundColor: 'white',
-    //         borderWidth: 1,
-    //         pointBorderColor: '#249EBF',
-    //         backgroundColor: 'red',
-    //         data: this.chartData
-    //       }
-    //     ]
-    //   }, this.options)
-    console.log('called');
-    console.log(this.$data._chart);
 		this.$data._chart.update();
 	}
 }

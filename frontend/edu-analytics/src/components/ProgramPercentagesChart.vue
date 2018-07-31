@@ -43,20 +43,6 @@ export default {
     },
   methods: {
 	updateProgramPercentageData() {
-     this.renderChart({
-        labels: this.chartLabels,
-        datasets: [
-          {
-            label: 'Program Percentages',
-            borderColor: '#249EBF',
-            pointBackgroundColor: 'white',
-            borderWidth: 1,
-            pointBorderColor: '#249EBF',
-            backgroundColor: 'blue',
-            data: this.chartData
-          }
-        ]
-      }, this.options)
 		this.$data._chart.update();
 	}
 }

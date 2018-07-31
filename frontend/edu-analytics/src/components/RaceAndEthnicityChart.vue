@@ -43,20 +43,6 @@ export default {
     },
   methods: {
 	updateRaceAndEthnicityData() {
-        this.renderChart({
-        labels: this.chartLabels,
-        datasets: [
-          {
-            label: 'Race And Ethnicity',
-            borderColor: '#249EBF',
-            pointBackgroundColor: 'white',
-            borderWidth: 1,
-            pointBorderColor: '#249EBF',
-            backgroundColor: 'orange',
-            data: this.chartData
-          }
-        ]
-      }, this.options)
 		this.$data._chart.update();
 	}
 }
