@@ -1,7 +1,7 @@
 
 <template>
-    <div>
-        
+    <div id="main">
+        <navbar></navbar>
         <!-- <div class="container-fluid">
       <div class="row">
         <nav class="col-md-1 d-none d-md-block bg-light sidebar">
@@ -42,6 +42,9 @@
         </main>
       </div>
     </div> -->
+    <button @click="createPDF()"> Save PDF </button>
+    <button @click="saveGeneratedData()"> Save Generated Data </button>
+    <button v-print>Print the entire page</button>
     <div class="container">
     <div class="row">
         <div class="col">
@@ -103,6 +106,12 @@ import RaceAndEthnicityChart from './RaceAndEthnicityChart.vue';
 import Vue from "vue";
 import VueCharts from "vue-chartjs";
 import { setTimeout } from "timers";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import Print from 'vue-print-nb'
+ 
+Vue.use(Print);
+
 Vue.use(VueCharts);
 export default {
   extends: VueCharts.Doughnut,
@@ -149,6 +158,40 @@ export default {
       });
   },
   methods: {
+      saveGeneratedData() {
+          let data = {
+              publicIncome: this.publicIncome,
+              programPercentages: this.programPercentage,
+              raceAndEthnicity: this.raceAndEthnicity,
+              schoolInformation: this.schoolInformation
+          }
+
+         
+      },
+      createPDF () {
+          let pdfName = 'Analytics';
+          html2canvas(document.body).then(canvas => {
+               var imgData = canvas.toDataURL("image/png");
+                  var imgWidth = 210; 
+          var pageHeight = 295;  
+          var imgHeight = canvas.height * imgWidth / canvas.width;
+          var heightLeft = imgHeight;
+
+          var doc = new jsPDF('p', 'mm');
+          var position = 0;
+
+          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+
+          while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            doc.addPage();
+            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+          doc.save('Analytics' + '.pdf');
+          })
+      },
     getSchoolInformation() {
         this.schoolInfoDataLoaded = false;
       this.$http

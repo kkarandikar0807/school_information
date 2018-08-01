@@ -54,10 +54,12 @@ app.get('/schoolinformation', (req: any, res: any) => {
 });
 
 app.post('/login', (req: any, res: any) => {
-    console.log(req.body);
-    res.json({
-        gotData: true
-    });
+    let user = new User(req.body.username, req.body.password);
+    MongoHelper.checkLoginData(user).then(data => {
+        res.json(data);
+    }).catch(error => {
+        res.json(error);
+    }) 
 });
 
 
@@ -128,22 +130,32 @@ app.get('/users', (req: any, res: any) => {
 });
 
 app.post('/users', (req: any, res: any) => {
-    console.log(req.body);
+    
     let user = new User(req.body.username, req.body.password);
     MongoHelper.addData(user).then(data => {
         res.json(data);
     }).catch(error => {
         res.json(error);
     })
-
 });
 
 app.put('/users', (req: any, res: any) => {
 
+    let user = new User(req.body.username, req.body.password);
+    MongoHelper.updateData(user).then(data => {
+        res.json(data);
+    }).catch(error => {
+        res.json(error);
+    })
 });
 
 app.delete('/users', (req: any, res: any) => {
-
+    let username = req.body.username;
+    MongoHelper.deleteData(username).then(data => {
+        res.json(data);
+    }).catch(error => {
+        res.json(error);
+    })
 });
 
 

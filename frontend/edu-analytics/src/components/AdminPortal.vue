@@ -1,22 +1,34 @@
 <template>
-    iv class="table-responsive">
+<div>
+  <navbar></navbar>
+   <div class="table-responsive">
             <table class="table table-striped table-sm">
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
+                  <th>User</th>
+                  <th>Update</th>
+                  <th>Add</th>
+                  <th>Delete</th>
+                  <th>Select</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
+                  <td>1,001
+                    <div class="select">
+                      <i class="fab fa-500px"></i>
+                    </div>
+                    <div class="update">
+                      <i class="fab fa-500px"></i>
+                    </div>
+                    <div class="delete">
+                      <i class="fab fa-500px"></i>
+                    </div>
+                  </td>
+                  <td><button>Update</button></td>
+                  <td><button>Add</button></td>
+                  <td><button>Delete</button></td>
+                  <td><button>Select</button></td>
                 </tr>
                 <tr>
                   <td>1,002</td>
@@ -126,16 +138,27 @@
               </tbody>
             </table>
           </div>
+</div>
+
 </template>
 
 <script>
+import Navbar from './Navbar.vue'
 export default {
+  components: {
+    navbar: Navbar
+  }
     
 }
 </script>
 
-<style>
-
+<style scoped>
+  i {
+  
+  }
+  .fa-500px:hover {
+    color: red
+  }
 </style>
 
 

@@ -28,10 +28,14 @@ export default {
     methods: {
         login() {
             this.$http.post('http://localhost:4000/login', this.user).then(response => {
-                console.log(response);
-                this.$router.push('/dashboard');
-            }, error => {
-                console.log(error);
+                return response.json()
+            }).then(data => {
+                if (data.isLoggedIn) {
+                    window.sessionStorage.setItem('isLoggedIn', true);
+                    this.$router.push('/dashboard');
+                } else {
+                    console.log('error');
+                }
             })
         }
     }
