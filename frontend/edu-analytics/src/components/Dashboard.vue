@@ -138,7 +138,7 @@ export default {
 
   beforeMount() {
     this.$http
-      .get("http://localhost:4000/schools")
+      .get("https://testing-app.cfapps.io/schools")
       .then(response => {
         return response.json();
       })
@@ -152,7 +152,7 @@ export default {
     getSchoolInformation() {
         this.schoolInfoDataLoaded = false;
       this.$http
-        .get("http://localhost:4000/schoolinformation", {
+        .get("https://testing-app.cfapps.io/schoolinformation", {
           params: { schoolId: this.selectedSchool }
         })
         .then(response => {
@@ -176,7 +176,7 @@ export default {
         this.programPercentageValues = [];
          this.programPercentageDataLoaded = false;
       this.$http
-        .get("http://localhost:4000/programpercentage", {
+        .get("https://testing-app.cfapps.io/programpercentage", {
           params: { schoolId: this.selectedSchool }
         })
         .then(response => {
@@ -243,7 +243,7 @@ export default {
       this.publicIncomeValues = [];
       this.publicIncomeDataLoaded = false;
       this.$http
-        .get("http://localhost:4000/publicincome", {
+        .get("https://testing-app.cfapps.io/publicincome", {
           params: { schoolId: this.selectedSchool }
         })
         .then(response => {
@@ -281,7 +281,7 @@ export default {
         this.raceAndEthnicityValues = [];
       this.raceAndEthnicityDataLoaded = false;
       this.$http
-        .get("http://localhost:4000/raceandethnicity", {
+        .get("https://testing-app.cfapps.io/raceandethnicity", {
           params: { schoolId: this.selectedSchool }
         })
         .then(response => {

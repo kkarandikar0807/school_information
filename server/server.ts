@@ -11,6 +11,8 @@ import { SchoolInformationMapper } from './mapper/school-information-mapper';
 import { RaceAndEthnicityMapper } from './mapper/race-and-ethnicity-mapper';
 import { PublicIncomeLevel } from './models/public-income-level';
 import { PublicIncomeLevelMapper } from './mapper/public-income-level-mapper';
+import { MongoHelper } from './helpers/mongo-helper';
+import { User } from './models/user';
 
 const app = express();
 app.use(cors());
@@ -113,6 +115,35 @@ app.get('/raceandethnicity', (req: any, res: any) => {
             res.json(mappedData);
         }
     });
+});
+
+app.get('/users', (req: any, res: any) => {
+    
+    MongoHelper.getData().then((data: any) => {
+    
+        res.json(data);
+    }).catch((error: any) => {
+        res.json(error);
+    })
+});
+
+app.post('/users', (req: any, res: any) => {
+    console.log(req.body);
+    let user = new User(req.body.username, req.body.password);
+    MongoHelper.addData(user).then(data => {
+        res.json(data);
+    }).catch(error => {
+        res.json(error);
+    })
+
+});
+
+app.put('/users', (req: any, res: any) => {
+
+});
+
+app.delete('/users', (req: any, res: any) => {
+
 });
 
 
