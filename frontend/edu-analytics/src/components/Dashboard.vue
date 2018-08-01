@@ -43,7 +43,7 @@
       </div>
     </div> -->
     <button @click="createPDF()"> Save PDF </button>
-    <button @click="saveGeneratedData()"> Save Generated Data </button>
+    <!-- <button @click="saveGeneratedData()"> Save Generated Data </button> -->
     <button v-print>Print the entire page</button>
     <div class="container">
     <div class="row">

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import DashBoard from '@/components/Dashboard'
 import Login from '@/components/Login'
 import AdminPortal from '@/components/AdminPortal'
+import NotAuthenticated from '@/components/NotAuthenticated'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
           next('/')
         }
       }
+    },
+    {
+      path: '/accessdenied',
+      name: 'Access denied',
+      component: NotAuthenticated
     }
   ]
 })

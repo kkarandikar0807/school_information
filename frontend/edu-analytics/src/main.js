@@ -6,11 +6,11 @@ import VueResource from 'vue-resource'
 import router from './router'
 import VueAutosuggest from 'vue-autosuggest'
 import VueCharts from 'vue-chartjs'
-
 Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(VueAutosuggest)
 Vue.use(VueCharts)
+// Vue.http.options.root = 'https://testing-app.cfapps.io'
 
 /* eslint-disable no-new */
 new Vue({
