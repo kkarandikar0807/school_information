@@ -2,21 +2,6 @@
 <div>
   <navbar></navbar>
   <div class="container-fluid">
-    <!-- <div class="row">
-      <div class="col-md-12">
-        <div>
-          <div class="form-group">
-            <label for="">Username</label>
-            <input class="form-control" type="text" required autofocus>
-        </div>
-        <div class="form-group">
-            <label for="">Password</label>
-            <input class="form-control" type="password" required>
-        </div>
-        <button class="btn btn-primary" type="submit"> Add User </button>
-        </div>
-      </div>
-    </div> -->
     <notifications group="admin" />
     <div class="row"></div>
     <div class="row">

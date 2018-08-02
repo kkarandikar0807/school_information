@@ -42,49 +42,82 @@
       </main>
     </div>
     </div> -->
-  <button @click="createPDF()"> Save PDF </button>
-  <button @click="saveGeneratedData()"> Save Generated Data </button>
-  <button v-print>Print the entire page</button>
+    <notifications group="dashboard" />
   <div class="container">
-    <div class="row">
+    <div class="row gutters">
       <div class="col">
-        <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
+         <select v-model="selectedSchool">
+            <!-- <option value="" disabled> Select an Option </option> -->
+            <option v-for="school in allSchools" v-bind:value="school.id">{{school.schoolName}}</option>
+        </select>
+        <button class="btn btn-primary" @click="getSchoolInformation(); getRaceAndEthnicity(); getPublicIncome(); getProgrampercentage();"> Get all data </button>
+        <button class="btn btn-primary" @click="createPDF()"> Save PDF </button>
+        <button class="btn btn-primary" @click="saveGeneratedData()"> Save Generated Data </button>
+        <button class="btn btn-primary" v-print>Print the entire page</button>
+
+        <!-- <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
           :suggestions="filteredOptions"
           @focus="focusMe"
           @click="clickHandler"
           :on-selected="onSelected"
           :render-suggestion="renderSuggestion"
           :get-suggestion-value="getSuggestionValue"
-          :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/>
+          :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/> -->
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6">
-        <public-income-chart ref="publicincome" :chart-data="publicIncomeValues" :chart-labels="publicIncomeKeys" v-if="publicIncomeDataLoaded"></public-income-chart>
-      </div>
-      <div class="col-md-6">
-        <program-percentages-chart ref="programpercentage" :chart-data="programPercentageValues" :chart-labels="programPercentageKeys" v-if="programPercentageDataLoaded"></program-percentages-chart>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <race-eth ref="raceandethnicity" :chart-data="raceAndEthnicityValues" :chart-labels="raceAndEthnicityKeys" v-if="raceAndEthnicityDataLoaded"></race-eth>
-      </div>
-      <div class="col-md-6">
-        <div class="card"  v-if="schoolInfoDataLoaded">
+    
+    <div class="row gutters">
+      <div class="col-md-12">
+         <div class="card"  v-if="schoolInfoDataLoaded">
           <div class="card-header">
-            School Information
+            <b>SCHOOL INFORMATION</b>
           </div>
+          <div class="card-body">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">School Name: - {{schoolInformation.schoolName|| 'Info not available'}}</li>
-            <li class="list-group-item">School Alias: - {{schoolInformation.schoolAlias|| 'Info not available' }} </li>
-            <li class="list-group-item">School Website: - {{schoolInformation.website || 'Info not available'}}</li>
-            <li class="list-group-item">School City: - {{schoolInformation.city|| 'Info not available'}}</li>
-            <li class="list-group-item">School State: - {{schoolInformation.state|| 'Info not available'}}</li>
-            <li class="list-group-item">School Zip Code: - {{schoolInformation.zipCode|| 'Info not available'}}</li>
-            <li class="list-group-item">School Size: - {{schoolInformation.size|| 'Info not available'}}</li>
+            <li class="list-group-item"><b>School Name: - </b>{{schoolInformation.schoolName|| 'Info not available'}}</li>
+            <li class="list-group-item"><b>School Alias: - </b>{{schoolInformation.schoolAlias|| 'Info not available' }} </li>
+            <li class="list-group-item"><b>School Website: - </b>{{schoolInformation.website || 'Info not available'}}</li>
+            <li class="list-group-item"><b>School City: - </b>{{schoolInformation.city|| 'Info not available'}}</li>
+            <li class="list-group-item"><b>School State: - </b>{{schoolInformation.state|| 'Info not available'}}</li>
+            <li class="list-group-item"><b>School Zip Code: - </b>{{schoolInformation.zipCode|| 'Info not available'}}</li>
+            <li class="list-group-item"><b>School Size: - </b>{{schoolInformation.size|| 'Info not available'}}</li>
           </ul>
+          </div>
         </div>
+        
+      </div>
+    </div>
+    <div class="row gutters">
+      <div class="col-md-12">
+        <div class="card" v-if="programPercentageDataLoaded">
+          <div class="card-header"> <b>PROGRAM PERCENTAGE</b> </div>
+          <div class="card-body">
+            <program-percentages-chart ref="programpercentage" :chart-data="programPercentageValues" :chart-labels="programPercentageKeys"></program-percentages-chart>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="row gutters">
+      <div class="col-md-12">
+        <div class="card"  v-if="raceAndEthnicityDataLoaded">
+          <div class="card-header"> <b>RACE AND ETHNICITY</b> </div>
+          <div class="card-body">
+            <race-eth ref="raceandethnicity" :chart-data="raceAndEthnicityValues" :chart-labels="raceAndEthnicityKeys"></race-eth>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="row gutters">
+      <div class="col-md-12">
+        <div class="card"  v-if="publicIncomeDataLoaded">
+          <div class="card-header"><b>PUBLIC INCOME LEVEL</b></div>
+          <div class="card-body">
+            <public-income-chart ref="publicincome" :chart-data="publicIncomeValues" :chart-labels="publicIncomeKeys"></public-income-chart>
+          </div>
+        </div>
+       
       </div>
     </div>
   </div>
@@ -110,8 +143,9 @@ import html2canvas from 'html2canvas';
 import Print from 'vue-print-nb'
 import save from 'save-file';
 import JsonExcel from 'vue-json-excel'
+import Notifications from 'vue-notification'
 
- 
+Vue.use(Notifications);
 Vue.use(Print);
 
 Vue.use(VueCharts);
@@ -161,6 +195,14 @@ export default {
       });
   },
   methods: {
+     notification(group, title, type, text) {
+        this.$notify({
+        group: group,
+        title: title,
+        type: type,
+        text: text
+        }); 
+    },
       saveGeneratedData() {
         let saveData = {
             programPercentage: this.programPercentage,
@@ -196,6 +238,10 @@ export default {
           })
       },
     getSchoolInformation() {
+      if (this.selectedSchool == null) {
+        this.notification('dashboard', 'ERROR MESSAGE', 'error', 'Please select a school')
+        return false;
+      }
         this.schoolInfoDataLoaded = false;
       this.$http
         .get("https://testing-app.cfapps.io/schoolinformation", {
@@ -219,6 +265,9 @@ export default {
     },
 
     getProgrampercentage() {
+      if (this.selectedSchool == null) {
+        return false;
+      }
         this.programPercentageValues = [];
          this.programPercentageDataLoaded = false;
       this.$http
@@ -286,6 +335,9 @@ export default {
     },
 
     getPublicIncome() {
+      if (this.selectedSchool == null) {
+        return false;
+      }
       this.publicIncomeValues = [];
       this.publicIncomeDataLoaded = false;
       this.$http
@@ -324,6 +376,9 @@ export default {
     },
 
     getRaceAndEthnicity() {
+      if (this.selectedSchool == null) {
+        return false;
+      }
         this.raceAndEthnicityValues = [];
       this.raceAndEthnicityDataLoaded = false;
       this.$http
@@ -387,6 +442,9 @@ export default {
       this.getProgrampercentage();
     },
     renderSuggestion(suggestion) {
+      console.log(suggestion);
+          return this.$createElement('div', { 'style': { color: 'red'} }, suggestion.item.schoolName);
+
       /* You will need babel-plugin-transform-vue-jsx for this kind of full customizable
        * rendering. If you don't use babel or the jsx transform, then you can use this
        * function to just `return suggestion['propertyName'];`
@@ -417,4 +475,20 @@ export default {
 
 </script>
 <style scoped>
+.gutters {
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
 </style>
