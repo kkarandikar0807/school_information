@@ -14,6 +14,8 @@ import { PublicIncomeLevelMapper } from './mapper/public-income-level-mapper';
 import { MongoHelper } from './helpers/mongo-helper';
 import { User } from './models/user';
 import * as fs from 'fs';
+import { PrivateIncomeLevel } from './models/private-income-level';
+import { PrivateIncomeLevelMapper } from './mapper/private-income-level-mapper';
 
 const app = express();
 app.use(cors());
@@ -96,6 +98,20 @@ app.get('/publicincome', (req: any ,res: any) => {
         } else {
             let bodyObject = JSON.parse(body);
             let mappedData: PublicIncomeLevel = PublicIncomeLevelMapper.mapData(bodyObject.results[0]["2015"].cost.net_price.public.by_income_level);
+            res.json(mappedData);
+        }
+    });
+});
+
+
+app.get('/privateincome', (req: any ,res: any) => {
+    schoolId = req.query.schoolId;
+    httpRequest.get(`${UrlConstants.baseURL}?id=${schoolId}&api_key=${UrlConstants.api_Key}`, (error: any, response: any, body: any) => {
+        if (error) {
+            res.json(error);
+        } else {
+            let bodyObject = JSON.parse(body);
+            let mappedData: PrivateIncomeLevel = PrivateIncomeLevelMapper.mapData(bodyObject.results[0]["2015"].cost.net_price.private.by_income_level);
             res.json(mappedData);
         }
     });

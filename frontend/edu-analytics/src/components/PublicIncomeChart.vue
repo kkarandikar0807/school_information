@@ -30,7 +30,7 @@ export default {
         labels: this.chartLabels,
         datasets: [
           {
-            label: 'Public Income',
+            label: 'Net Price by Public Income',
             borderColor: '#249EBF',
             pointBackgroundColor: 'white',
             borderWidth: 1,
