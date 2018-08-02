@@ -1,7 +1,11 @@
 <template>
 <div class="container-fluid center_div">
-   
-        <div class="form-group">
+        <div class="card">
+            <div class="card-header">
+                <b> LOGIN </b>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
             <label for="">Username</label>
             <input class="form-control" type="text" v-model = user.username required autofocus>
         </div>
@@ -10,7 +14,8 @@
             <input class="form-control" type="password" v-model = user.password required v-on:keyup.enter="login()">
         </div>
         <button class="btn btn-primary" @click="login()" type="submit"  :disabled="!(user.username!=='' && user.password!=='')" > Login </button>
-    
+            </div>
+        </div>
 </div>
     
 </template>
@@ -57,6 +62,7 @@ export default {
     /* margin: 0 auto; */
     /* value of your choice which suits your alignment */
 }
+
 </style>
 
 

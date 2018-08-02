@@ -10,7 +10,7 @@
                   <option v-for="school in allSchools" v-bind:value="school.id">{{school.schoolName}}</option>
                </select>
                <button class="btn btn-primary" @click="getSchoolInformation(); getRaceAndEthnicity(); getPublicIncome();  getPrivateIncome();getProgrampercentage();"> Get all data </button>
-               <button class="btn btn-primary" @click="createPDF()" :disabled="isSavePDFEnabled"> Save PDF </button>
+               <button class="btn btn-primary" @click="createPDF()"> Save PDF </button>
                <button class="btn btn-primary" @click="saveGeneratedData()"> Save Generated Data </button>
                <button class="btn btn-primary" v-print>Print the entire page</button>
                <!-- <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
@@ -149,7 +149,6 @@ export default {
       programPercentageDataLoaded: false,
       raceAndEthnicityDataLoaded: false,
       schoolInfoDataLoaded: false,
-      isSavePDFEnabled: true,
       selected: ""
     };
   },
@@ -187,7 +186,6 @@ export default {
       },
       createPDF () {
           let pdfName = 'Analytics';
-          this.isSavePDFEnabled = false;
           html2canvas(document.body).then(canvas => {
                var imgData = canvas.toDataURL("image/png");
                   var imgWidth = 210; 
@@ -208,7 +206,6 @@ export default {
             heightLeft -= pageHeight;
           }
           doc.save('Analytics' + '.pdf');
-          this.isSavePDFEnabled = true;
           })
       },
     getSchoolInformation() {
@@ -353,7 +350,7 @@ export default {
       if (this.selectedSchool == null) {
         return false;
       }
-      this.privateIncomevalues = [];
+      this.privateIncomeValues = [];
       this.privateIncomeDataLoaded = false;
       this.$http
         .get(`${URLConstants.SERVER_URL}/privateincome`, {
@@ -364,7 +361,7 @@ export default {
           return response.json();
         })
         .then(data => {
-              
+              console.log(data);
           this.privateIncome = new PrivateIncomeLevel(
             data._zeroTo48000,
             data._thirtyThousandAndOneTo75000,
@@ -375,16 +372,17 @@ export default {
             data._fortyEightThousandAndOneTo75000,
             data._hundredAndTenThousandAndOnePlus
           );
+          console.log(this.privateIncome);
           for (let key in this.privateIncome) {
             this.privateIncomeValues.push(this.privateIncome[key]);
           }
           this.privateIncomeKeys = Object.keys(this.privateIncome);
-          this.updatePrivateIncomeData(this.privateIncomeValyes);
+          this.updatePrivateIncomeData(this.privateIncomeValues);
           this.privateIncomeDataLoaded = true;
         });
     },
     updatePrivateIncomeData(newData) {
-      this.privateIncomeValyes = newData;
+      this.privateIncomeValues = newData;
       setTimeout(() => {
         this.$refs.privateincome.updatePrivateIncomeData();
       });
@@ -459,6 +457,14 @@ export default {
 /* On mouse-over, add a deeper shadow */
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    top: -3px;
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.card:not(:hover) {
+  top: 3px;
+  transition: 0.3s
 }
 
 </style>
