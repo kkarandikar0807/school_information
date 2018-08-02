@@ -9,7 +9,7 @@ export class MongoHelper {
     }
     
     public static addData(user: User): Promise<any> {
-        console.log(user);
+        
         return new Promise((resolve: any, reject: any) => {
             MongoClient.connect(DatabaseConstants.databaseConnectionUrl, (error: any, client: any) => {
                 if (error) {
@@ -65,6 +65,7 @@ export class MongoHelper {
                     let collection = db.collection(DatabaseConstants.collectionName);
 
                     collection.deleteOne({username: username}, (error: any, data: any) => {
+                        
                         if (error) {
                             reject(error);
                         } else {

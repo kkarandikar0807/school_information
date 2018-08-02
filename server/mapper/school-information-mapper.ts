@@ -4,7 +4,7 @@ import {SchoolInformation} from "../models/school-information";
 export class SchoolInformationMapper {
 
     public static mapData(data: any, schoolSize: String): SchoolInformation {
-        // console.log(data);
+        
         let schoolInfo = new SchoolInformation();
         schoolInfo.schoolName = data.name;
         schoolInfo.schoolAlias = data.alias;

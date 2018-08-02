@@ -27,6 +27,7 @@ export default {
     },
     methods: {
         login() {
+            this.user.username = this.user.username.trim();
             this.$http.post('https://testing-app.cfapps.io/login', this.user).then(response => {
                 return response.json()
             }).then(data => {

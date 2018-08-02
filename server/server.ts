@@ -13,6 +13,7 @@ import { PublicIncomeLevel } from './models/public-income-level';
 import { PublicIncomeLevelMapper } from './mapper/public-income-level-mapper';
 import { MongoHelper } from './helpers/mongo-helper';
 import { User } from './models/user';
+import * as fs from 'fs';
 
 const app = express();
 app.use(cors());
@@ -43,7 +44,7 @@ app.get('/schoolinformation', (req: any, res: any) => {
     
     httpRequest.get(`${UrlConstants.baseURL}?id=${schoolId}&api_key=${UrlConstants.api_Key}`, (error: any, response: any, body: any) => {
         if (error) {
-            console.log(error);
+            res.json(error);
         } else {
             let dataJson = JSON.parse(body);
             let mappedData: SchoolInformation = SchoolInformationMapper.mapData(dataJson.results[0].school, dataJson.results[0]["2015"].student.size);
@@ -94,9 +95,7 @@ app.get('/publicincome', (req: any ,res: any) => {
             res.json(error);
         } else {
             let bodyObject = JSON.parse(body);
-            
             let mappedData: PublicIncomeLevel = PublicIncomeLevelMapper.mapData(bodyObject.results[0]["2015"].cost.net_price.public.by_income_level);
-            console.log(mappedData);
             res.json(mappedData);
         }
     });
@@ -121,8 +120,10 @@ app.get('/raceandethnicity', (req: any, res: any) => {
 
 app.get('/users', (req: any, res: any) => {
     
+    let users = [];
+
     MongoHelper.getData().then((data: any) => {
-    
+        
         res.json(data);
     }).catch((error: any) => {
         res.json(error);
@@ -140,7 +141,7 @@ app.post('/users', (req: any, res: any) => {
 });
 
 app.put('/users', (req: any, res: any) => {
-
+    
     let user = new User(req.body.username, req.body.password);
     MongoHelper.updateData(user).then(data => {
         res.json(data);
@@ -150,7 +151,7 @@ app.put('/users', (req: any, res: any) => {
 });
 
 app.delete('/users', (req: any, res: any) => {
-    let username = req.body.username;
+    let username = req.body.user;
     MongoHelper.deleteData(username).then(data => {
         res.json(data);
     }).catch(error => {

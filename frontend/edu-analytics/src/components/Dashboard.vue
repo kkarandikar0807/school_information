@@ -1,95 +1,94 @@
 
 <template>
-    <div id="main">
-        <navbar></navbar>
-        <!-- <div class="container-fluid">
-      <div class="row">
-        <nav class="col-md-1 d-none d-md-block bg-light sidebar">
-          <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                  Dashboard <span class="sr-only">(current)</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-11 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">School Information Dashboard</h1>
-            <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group mr-2">
-                <button class="btn btn-sm btn-outline-secondary">Save as PDF</button>
-                <button class="btn btn-sm btn-outline-secondary">Print</button>
-              </div>
+  <div id="main">
+  <navbar></navbar>
+  <!-- <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-1 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Dashboard <span class="sr-only">(current)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-11 px-4"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">School Information Dashboard</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+              <button class="btn btn-sm btn-outline-secondary">Save as PDF</button>
+              <button class="btn btn-sm btn-outline-secondary">Print</button>
             </div>
           </div>
-               <div class="row">
-              <div class="col-md" >
-                  <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
-            :suggestions="filteredOptions"
-            @focus="focusMe"
-            @click="clickHandler"
-            :on-selected="onSelected"
-            :render-suggestion="renderSuggestion"
-            :get-suggestion-value="getSuggestionValue"
-            :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/>
-            </div>  
-          </div>
-        </main>
-      </div>
-    </div> -->
-    <button @click="createPDF()"> Save PDF </button>
-    <!-- <button @click="saveGeneratedData()"> Save Generated Data </button> -->
-    <button v-print>Print the entire page</button>
-    <div class="container">
-    <div class="row">
-        <div class="col">
-            <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
-            :suggestions="filteredOptions"
-            @focus="focusMe"
-            @click="clickHandler"
-            :on-selected="onSelected"
-            :render-suggestion="renderSuggestion"
-            :get-suggestion-value="getSuggestionValue"
-            :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/>
         </div>
+             <div class="row">
+            <div class="col-md" >
+                <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
+          :suggestions="filteredOptions"
+          @focus="focusMe"
+          @click="clickHandler"
+          :on-selected="onSelected"
+          :render-suggestion="renderSuggestion"
+          :get-suggestion-value="getSuggestionValue"
+          :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/>
+          </div>  
+        </div>
+      </main>
     </div>
-    
-   <div class="row">
-       <div class="col-md-6">
-           <public-income-chart ref="publicincome" :chart-data="publicIncomeValues" :chart-labels="publicIncomeKeys" v-if="publicIncomeDataLoaded"></public-income-chart>
-       </div>
-       <div class="col-md-6">
-           <program-percentages-chart ref="programpercentage" :chart-data="programPercentageValues" :chart-labels="programPercentageKeys" v-if="programPercentageDataLoaded"></program-percentages-chart>
-       </div>
-   </div>    
-   <div class="row">
-       <div class="col-md-6">
-           <race-eth ref="raceandethnicity" :chart-data="raceAndEthnicityValues" :chart-labels="raceAndEthnicityKeys" v-if="raceAndEthnicityDataLoaded"></race-eth>
-       </div>
-       <div class="col-md-6">
-           <div class="card"  v-if="schoolInfoDataLoaded">
-  <div class="card-header">
-    School Information
+    </div> -->
+  <button @click="createPDF()"> Save PDF </button>
+  <button @click="saveGeneratedData()"> Save Generated Data </button>
+  <button v-print>Print the entire page</button>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
+          :suggestions="filteredOptions"
+          @focus="focusMe"
+          @click="clickHandler"
+          :on-selected="onSelected"
+          :render-suggestion="renderSuggestion"
+          :get-suggestion-value="getSuggestionValue"
+          :input-props="{id:'autosuggest__input', onInputChange: this.onInputChange, placeholder:'Select a School'}"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <public-income-chart ref="publicincome" :chart-data="publicIncomeValues" :chart-labels="publicIncomeKeys" v-if="publicIncomeDataLoaded"></public-income-chart>
+      </div>
+      <div class="col-md-6">
+        <program-percentages-chart ref="programpercentage" :chart-data="programPercentageValues" :chart-labels="programPercentageKeys" v-if="programPercentageDataLoaded"></program-percentages-chart>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <race-eth ref="raceandethnicity" :chart-data="raceAndEthnicityValues" :chart-labels="raceAndEthnicityKeys" v-if="raceAndEthnicityDataLoaded"></race-eth>
+      </div>
+      <div class="col-md-6">
+        <div class="card"  v-if="schoolInfoDataLoaded">
+          <div class="card-header">
+            School Information
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">School Name: - {{schoolInformation.schoolName|| 'Info not available'}}</li>
+            <li class="list-group-item">School Alias: - {{schoolInformation.schoolAlias|| 'Info not available' }} </li>
+            <li class="list-group-item">School Website: - {{schoolInformation.website || 'Info not available'}}</li>
+            <li class="list-group-item">School City: - {{schoolInformation.city|| 'Info not available'}}</li>
+            <li class="list-group-item">School State: - {{schoolInformation.state|| 'Info not available'}}</li>
+            <li class="list-group-item">School Zip Code: - {{schoolInformation.zipCode|| 'Info not available'}}</li>
+            <li class="list-group-item">School Size: - {{schoolInformation.size|| 'Info not available'}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">School Name: - {{schoolInformation.schoolName|| 'Info not available'}}</li>
-    <li class="list-group-item">School Alias: - {{schoolInformation.schoolAlias|| 'Info not available' }} </li>
-    <li class="list-group-item">School Website: - {{schoolInformation.website || 'Info not available'}}</li>
-    <li class="list-group-item">School City: - {{schoolInformation.city|| 'Info not available'}}</li>
-    <li class="list-group-item">School State: - {{schoolInformation.state|| 'Info not available'}}</li>
-    <li class="list-group-item">School Zip Code: - {{schoolInformation.zipCode|| 'Info not available'}}</li>
-    <li class="list-group-item">School Size: - {{schoolInformation.size|| 'Info not available'}}</li>
-  </ul>
 </div>
-       </div>
-   </div>    
-   </div>     
-    </div>
 </template>
 <script>
 
@@ -109,6 +108,9 @@ import { setTimeout } from "timers";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import Print from 'vue-print-nb'
+import save from 'save-file';
+import JsonExcel from 'vue-json-excel'
+
  
 Vue.use(Print);
 
@@ -120,7 +122,8 @@ export default {
     vueAutosuggest: VueAutosuggest,
     publicIncomeChart: PublicIncomeChart,
     programPercentagesChart: ProgramPercentagesChart,
-    raceEth: RaceAndEthnicityChart
+    raceEth: RaceAndEthnicityChart,
+    downloadExcel: JsonExcel
   },
   data: function() {
     return {
@@ -159,14 +162,14 @@ export default {
   },
   methods: {
       saveGeneratedData() {
-          let data = {
-              publicIncome: this.publicIncome,
-              programPercentages: this.programPercentage,
-              raceAndEthnicity: this.raceAndEthnicity,
-              schoolInformation: this.schoolInformation
-          }
-
-         
+        let saveData = {
+            programPercentage: this.programPercentage,
+            raceAndEthnicity: this.raceAndEthnicity,
+            schoolInformation: this.schoolInformation,
+            publicIncome: this.publicIncome
+        }
+        save(JSON.stringify(saveData), 'analytics.txt', (error, data) => {
+        })
       },
       createPDF () {
           let pdfName = 'Analytics';
