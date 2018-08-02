@@ -7,9 +7,9 @@
         </div>
         <div class="form-group">
             <label for="">Password</label>
-            <input class="form-control" type="password" v-model = user.password required>
+            <input class="form-control" type="password" v-model = user.password required v-on:keyup.enter="login()">
         </div>
-        <button class="btn btn-primary" @click="login" type="submit"  :disabled="!(user.username!=='' && user.password!=='')"> Login </button>
+        <button class="btn btn-primary" @click="login()" type="submit"  :disabled="!(user.username!=='' && user.password!=='')" > Login </button>
     
 </div>
     

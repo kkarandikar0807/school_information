@@ -35,7 +35,8 @@ export default {
             pointBackgroundColor: 'white',
             borderWidth: 1,
             pointBorderColor: '#249EBF',
-            backgroundColor: 'orange',
+            backgroundColor: ['red', 'blue', 'orange', 'orangered', '	#DEB887', '	#FFF8DC', '	#DC143C', '	#BDB76B', '	#8B008B', '	#E9967A', '#1E90FF', '#1E90FF', 
+                    '	#FFD700', '	#ADFF2F', '	#008000', '	#ADD8E6', '	#90EE90', '	#87CEFA', '	#00FF00'],
             data: this.chartData
           }
         ]
