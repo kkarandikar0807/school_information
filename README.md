@@ -84,4 +84,13 @@ please create a user like
 IT IS SAFER TO USE THE DATABASE WHICH IS ALREADY HOSTED ON CLOUD, AS IT ALREADY CONTAINS THE USER admin.
 
 
+# WAYS TO USE THE APP: - 
+
+Ways to use the app: - 
+
+When you login, you should be able to see a search box. 
+Select a school -> Click the university icon(first button) to get the required data.
+
+You can also head to the portal (Admin Portal) from the navbar where you can add delete or update users.
+You wont be able to delete the admin user(this is the default user).
 
