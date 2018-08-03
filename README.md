@@ -62,6 +62,22 @@ Change the database name and collection names.
 This will make sure that the server and database are working locally.
 
 
+# DATABASE
+
+In order to login in the app, we need a username and a password.
+
+The app assumes that there is one user called `admin` who is present in the database.
+
+In case of local mongoDB,
+please create a user like
+
+`
+    {
+        "username": "admin",
+        "password": "password"
+    }
+`
+
 
 
 
