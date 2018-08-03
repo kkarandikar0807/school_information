@@ -12,7 +12,7 @@
                </select>
                <button class="btn btn-primary" @click="getSchoolInformation(); getRaceAndEthnicity(); getPublicIncome();  getPrivateIncome();getProgrampercentage();" v-tooltip="'About School'"> <i class="fa fa-university" aria-hidden="true"></i> </button>
                <button class="btn btn-primary" @click="createPDF()" v-tooltip="'Save Data as PDF'"><i class="fa fa-file-pdf" aria-hidden="true"></i></button>
-               <button class="btn btn-primary" @click="saveGeneratedData()"  v-tooltip="'Save Data'"><i class="fa fa-download" aria-hidden="true"></i></button>
+               <button class="btn btn-primary" @click="saveGeneratedData()"  v-tooltip="'Save JSON'"><i class="fa fa-download" aria-hidden="true"></i></button>
                <button class="btn btn-primary" v-print v-tooltip="'Print'"><i class="fa fa-print" aria-hidden="true"></i></button>
                <!-- <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
                   :suggestions="filteredOptions"
