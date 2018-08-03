@@ -1,1 +1,1 @@
-export const SERVER_URL = 'https://testing-app.cfapps.io'
+export const SERVER_URL = 'https://education-analytics-server.cfapps.io'

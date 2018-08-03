@@ -22,8 +22,8 @@
 
 <script>
 import  * as URLConstants from '../constants/url-constants.js'
-
 export default {
+    
     data: function() {
         return {
             user: {
