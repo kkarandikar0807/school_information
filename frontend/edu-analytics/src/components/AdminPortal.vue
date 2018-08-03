@@ -59,6 +59,7 @@ import Notifications from 'vue-notification'
 import Vue from 'vue'
 import { log } from 'util';
 import VTooltip from 'v-tooltip'
+import  * as URLConstants from '../constants/url-constants.js'
 Vue.use(VTooltip)
 VTooltip.options.defaultTemplate =
   '<div class="foo" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
@@ -94,7 +95,7 @@ export default {
         }); 
     },
     getAllUsers() {
-      this.$http.get('https://testing-app.cfapps.io/users').then(response => {
+      this.$http.get(`${URLConstants.SERVER_URL}/users`).then(response => {
         return response.json()
       }).then(data => {
         data.forEach(element => {
@@ -120,7 +121,7 @@ export default {
         this.notification('admin', 'ERROR MESSAGE', 'error', 'You must have at least one user');
         return false;
       }
-      this.$http.delete('https://testing-app.cfapps.io/users', {body: {user: user.username}}).then(response => {
+      this.$http.delete(`${URLConstants.SERVER_URL}/users`, {body: {user: user.username}}).then(response => {
         return response.json()
       }).then(data => {
         this.notification('admin', 'SUCCESS MESSAGE','success', 'User data deleted!')
@@ -136,7 +137,7 @@ export default {
         username: username.trim(),
         password: password
       }
-      this.$http.post('https://testing-app.cfapps.io/users', user).then(response => {
+      this.$http.post(`${URLConstants.SERVER_URL}/users`, user).then(response => {
         return response.json()
       }).then(data => {
         if (data.code == 11000) {
@@ -157,7 +158,7 @@ export default {
 
     updateUser(username, password) {
       this.isUpdateButtonEnabled = false;
-      this.$http.put('https://testing-app.cfapps.io/users', {username: username, password: password}).then(response => {
+      this.$http.put(`${URLConstants.SERVER_URL}/users`, {username: username, password: password}).then(response => {
         return response.json()
       }).then(data => {
         this.notification('admin', 'SUCCESS MESSAGE','success', 'User data successfully updated!')
