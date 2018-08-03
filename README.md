@@ -1,4 +1,4 @@
-# school_information
+# SCHOOL_INFORMATION
 
 This repo contains both the front-end and the server folders.
 
