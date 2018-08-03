@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import  * as URLConstants from '../constants/url-constants.js'
+
 export default {
     data: function() {
         return {
@@ -32,7 +34,7 @@ export default {
     },
     methods: {
         login() {
-            this.$http.post('https://testing-app.cfapps.io/login', {username: this.user.username.trim().toLowerCase(), password: this.user.password}).then(response => {
+            this.$http.post(`${URLConstants.SERVER_URL}/login`, {username: this.user.username.trim().toLowerCase(), password: this.user.password}).then(response => {
                 return response.json()
             }).then(data => {
                 if (data.isLoggedIn) {
