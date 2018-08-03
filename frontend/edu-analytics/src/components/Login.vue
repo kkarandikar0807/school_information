@@ -13,8 +13,8 @@
             <label for="">Password</label>
             <input class="form-control" type="password" v-model = user.password required v-on:keyup.enter="login()">
         </div>
-        <button class="btn btn-primary" @click="login()" type="submit"  :disabled="!(user.username!=='' && user.password!=='')" > Login </button>
             </div>
+        <button class="btn btn-primary" @click="login()" type="submit"  :disabled="!(user.username!=='' && user.password!=='')" > Login </button>
         </div>
 </div>
     
@@ -32,8 +32,7 @@ export default {
     },
     methods: {
         login() {
-            this.user.username = this.user.username.trim();
-            this.$http.post('https://testing-app.cfapps.io/login', this.user).then(response => {
+            this.$http.post('https://testing-app.cfapps.io/login', {username: this.user.username.trim().toLowerCase(), password: this.user.password}).then(response => {
                 return response.json()
             }).then(data => {
                 if (data.isLoggedIn) {
@@ -61,6 +60,13 @@ export default {
   
     /* margin: 0 auto; */
     /* value of your choice which suits your alignment */
+}
+
+.btn {
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 </style>

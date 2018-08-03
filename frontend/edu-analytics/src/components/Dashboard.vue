@@ -3,16 +3,17 @@
    <div id="main">
       <navbar></navbar>
       <notifications group="dashboard" />
+      <div class="add-space"></div>
       <div class="container">
          <div class="row gutters">
             <div class="col">
-               <select v-model="selectedSchool">
+               <select v-model="selectedSchool" class="custom-select" style="width: 40%" >
                   <option v-for="school in allSchools" v-bind:value="school.id">{{school.schoolName}}</option>
                </select>
-               <button class="btn btn-primary" @click="getSchoolInformation(); getRaceAndEthnicity(); getPublicIncome();  getPrivateIncome();getProgrampercentage();"> Get all data </button>
-               <button class="btn btn-primary" @click="createPDF()"> Save PDF </button>
-               <button class="btn btn-primary" @click="saveGeneratedData()"> Save Generated Data </button>
-               <button class="btn btn-primary" v-print>Print the entire page</button>
+               <button class="btn btn-primary" @click="getSchoolInformation(); getRaceAndEthnicity(); getPublicIncome();  getPrivateIncome();getProgrampercentage();"> Generate Analytics </button>
+               <button class="btn btn-primary" @click="createPDF()" v-tooltip="'Save Data as PDF'"><i class="fa fa-file-pdf" aria-hidden="true"></i></button>
+               <button class="btn btn-primary" @click="saveGeneratedData()"><i class="fa fa-download" v-tooltip="'Save Data'" aria-hidden="true"></i></button>
+               <button class="btn btn-primary" v-print><i class="fa fa-print" aria-hidden="true" v-tooltip="'Print'"></i></button>
                <!-- <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
                   :suggestions="filteredOptions"
                   @focus="focusMe"
@@ -100,6 +101,8 @@ import PublicIncomeChart from "./PublicIncomeChart.vue";
 import PrivateIncomeChart from './PrivateIncomeChart.vue'
 import ProgramPercentagesChart from "./ProgramPercentagesChart.vue";
 import RaceAndEthnicityChart from './RaceAndEthnicityChart.vue';
+import VTooltip from 'v-tooltip'
+
 import Vue from "vue";
 import VueCharts from "vue-chartjs";
 import { setTimeout } from "timers";
@@ -113,8 +116,10 @@ import  * as URLConstants from '../constants/url-constants.js'
 
 Vue.use(Notifications);
 Vue.use(Print);
-
+Vue.use(VTooltip)
 Vue.use(VueCharts);
+VTooltip.options.defaultTemplate =
+  '<div class="foo" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
 export default {
   extends: VueCharts.Doughnut,
   components: {
@@ -444,8 +449,8 @@ export default {
 </script>
 <style scoped>
 .gutters {
-  margin-top: 100px;
-  margin-bottom: 100px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .card {
@@ -465,6 +470,10 @@ export default {
 .card:not(:hover) {
   top: 3px;
   transition: 0.3s
+}
+
+.add-space {
+  height: 20px;
 }
 
 </style>

@@ -18,6 +18,7 @@
     "jspdf": "^1.4.1",
     "npm": "^6.2.0",
     "save-file": "^1.2.0",
+    "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.5.2",
     "vue-autosuggest": "^1.4.3",
     "vue-chartjs": "^3.3.2",

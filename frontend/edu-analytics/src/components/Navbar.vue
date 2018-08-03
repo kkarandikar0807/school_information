@@ -5,7 +5,7 @@
       <!-- <a class="navbar-brand col-sm-3 col-md-2 mr-0">Education Analytics</a> -->
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <router-link to="/dashboard" class="nav-link"> Education Analytics </router-link>
+          <router-link to="/dashboard" class="nav-link"> <img style="height:50px;" src="../assets/edu-analytics.png"> </router-link>
         </li>
       </ul>
       <ul class="navbar-nav px-3">

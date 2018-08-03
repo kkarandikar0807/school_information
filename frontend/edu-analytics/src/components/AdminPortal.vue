@@ -13,18 +13,18 @@
                   <th>
                     <div class="form-group">
             <label for="">Username</label>
-            <input class="form-control" type="text" v-model="username" :disabled="isUserInputDisabled">
+            <input id="username" class="form-control" type="text" v-model="username" :disabled="isUserInputDisabled" autofocus>
         </div>
                   </th>
                   <th>
                     <div class="form-group">
             <label for="">Password</label>
-            <input class="form-control" type="password" v-model="password">
+            <input id="password" class="form-control" type="password" v-model="password">
         </div>
                   </th>
                   <th>
                     <div class="form-group">
-                    <button class="btn btn-primary" :disabled="(!isUpdateButtonEnabled || (password=='')) " @click="updateUser(username, password)">Update</button>
+                    <button class="btn btn-primary" :disabled="(!isUpdateButtonEnabled || (password=='')) " @click="updateUser(username, password)"> Update </button>
                     <button class="btn btn-success" :disabled="!(username!=='' && password!=='')" @click="addUser(username, password)">Add New</button>
                     </div>
                   </th>
@@ -36,12 +36,10 @@
               <tbody>
                 <tr  v-for="user in users">
                   <td colspan="3">{{user.username}}
-                      <button style="float:right;" class="btn btn-warning" @click="editUser(user)">
-                        Edit User
-                      </button> 
-                      <button style="float:right; margin-right: 10px;" class="btn btn-danger" @click="deleteUser(user)">
-                        Delete User
-                      </button> 
+                      <button style="float:right; margin-right: 10px;" class="btn btn-info" @click="editUser(user)" v-tooltip="'Edit User'">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button class="btn btn-danger" @click="deleteUser(user)" v-tooltip="'Delete User'" style="float:right; margin-right: 10px;"><i class="fa fa-trash"></i></button>
                   </td>
                 </tr>
               </tbody>
@@ -60,6 +58,10 @@ import Navbar from './Navbar.vue'
 import Notifications from 'vue-notification'
 import Vue from 'vue'
 import { log } from 'util';
+import VTooltip from 'v-tooltip'
+Vue.use(VTooltip)
+VTooltip.options.defaultTemplate =
+  '<div class="foo" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
 Vue.use(Notifications)
 
 export default {
@@ -103,6 +105,8 @@ export default {
       })
     },
     editUser(user) {
+      document.getElementById("password").focus();
+
       this.isUserInputDisabled = true;
       this.isUpdateButtonEnabled = true;
       this.username = user.username;
@@ -161,6 +165,7 @@ export default {
         this.getAllUsers();
         this.clearInputFields();
         this.isUserInputDisabled = false;
+
       }).catch(error => {
         this.notification('admin', 'ERROR MESSAGE', 'error', 'We are experiencing errors while updating users')
          this.$notify({
@@ -178,12 +183,7 @@ export default {
 </script>
 
 <style scoped>
-  i {
-  
-  }
-  .fa-500px:hover {
-    color: red
-  }
+
 </style>
 
 
