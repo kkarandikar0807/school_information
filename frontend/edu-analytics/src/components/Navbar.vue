@@ -15,7 +15,7 @@
       </ul>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" @click="logout()">Sign out</a>
+          <a class="nav-link" @click="logout()" style="cursor: pointer">Sign out</a>
         </li>
       </ul>
     </nav>

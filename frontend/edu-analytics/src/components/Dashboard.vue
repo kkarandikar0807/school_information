@@ -10,10 +10,10 @@
                <select v-model="selectedSchool" class="custom-select" style="width: 40%" >
                   <option v-for="school in allSchools" v-bind:value="school.id">{{school.schoolName}}</option>
                </select>
-               <button class="btn btn-primary" @click="getSchoolInformation(); getRaceAndEthnicity(); getPublicIncome();  getPrivateIncome();getProgrampercentage();"> Generate Analytics </button>
+               <button class="btn btn-primary" @click="getSchoolInformation(); getRaceAndEthnicity(); getPublicIncome();  getPrivateIncome();getProgrampercentage();" v-tooltip="'About School'"> <i class="fa fa-university" aria-hidden="true"></i> </button>
                <button class="btn btn-primary" @click="createPDF()" v-tooltip="'Save Data as PDF'"><i class="fa fa-file-pdf" aria-hidden="true"></i></button>
-               <button class="btn btn-primary" @click="saveGeneratedData()"><i class="fa fa-download" v-tooltip="'Save Data'" aria-hidden="true"></i></button>
-               <button class="btn btn-primary" v-print><i class="fa fa-print" aria-hidden="true" v-tooltip="'Print'"></i></button>
+               <button class="btn btn-primary" @click="saveGeneratedData()"  v-tooltip="'Save Data'"><i class="fa fa-download" aria-hidden="true"></i></button>
+               <button class="btn btn-primary" v-print v-tooltip="'Print'"><i class="fa fa-print" aria-hidden="true"></i></button>
                <!-- <vue-autosuggest style="z-index:1; position:absolute; width: 90%"
                   :suggestions="filteredOptions"
                   @focus="focusMe"
@@ -366,7 +366,6 @@ export default {
           return response.json();
         })
         .then(data => {
-              console.log(data);
           this.privateIncome = new PrivateIncomeLevel(
             data._zeroTo48000,
             data._thirtyThousandAndOneTo75000,
@@ -377,7 +376,6 @@ export default {
             data._fortyEightThousandAndOneTo75000,
             data._hundredAndTenThousandAndOnePlus
           );
-          console.log(this.privateIncome);
           for (let key in this.privateIncome) {
             this.privateIncomeValues.push(this.privateIncome[key]);
           }
