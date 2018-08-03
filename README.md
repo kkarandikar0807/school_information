@@ -84,9 +84,8 @@ please create a user like
 IT IS SAFER TO USE THE DATABASE WHICH IS ALREADY HOSTED ON CLOUD, AS IT ALREADY CONTAINS THE USER admin.
 
 
-# WAYS TO USE THE APP: - 
+# WAYS TO USE THE APP
 
-Ways to use the app: - 
 
 When you login, you should be able to see a search box. 
 Select a school -> Click the university icon(first button) to get the required data.
